@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#173940" />
+    <title>Northstar — Private wealth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">✦</span><span><strong>northstar</strong><small>PRIVATE WEALTH</small></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav>
+        <a class="nav-link active" href="#overview">⌁ <span>Overview</span></a>
+        <a class="nav-link" href="#holdings">▣ <span>Holdings</span></a>
+        <button class="nav-link" id="exportButton">⇩ <span>Export report</span></button>
+      </nav>
+      <div class="privacy-note"><span>♢</span><div><b>Local by default</b><p>Your positions stay in this browser. Quotes are the only thing we look up.</p></div></div>
+      <div class="sidebar-footer"><span class="avatar">PP</span><span><b>Personal portfolio</b><small>PERSONAL SPACE</small></span></div>
+    </aside>
+
+    <main>
+      <header class="topbar"><div class="crumb"><span></span> Personal portfolio <i>/</i> Overview</div><div class="top-actions"><div id="dateLine"></div><button class="outline-button" id="refreshButton">⟳ &nbsp; Refresh quotes</button></div></header>
+      <section class="page-heading" id="overview"><div><p class="eyebrow">GOOD MORNING</p><h1>Your northstar.</h1><p class="subtitle">A clear view of what you own, where it is, and how it is moving.</p></div><div class="status"><i></i> <b>Quote status</b><span id="statusText">Demo data</span></div></section>
+
+      <section class="hero-card">
+        <div class="portfolio-summary"><p class="eyebrow">PORTFOLIO VALUE <span>USD</span></p><div class="value-line"><strong id="portfolioValue">$0</strong><span class="movement-badge" id="movementBadge">—</span></div><p class="total-return">Total return <b id="totalReturn">$0</b> <span id="returnPercent">(0%)</span></p><div class="sparkline" aria-hidden="true"><svg viewBox="0 0 260 68" preserveAspectRatio="none"><path d="M3 11 C24 9, 30 26, 47 22 S75 29, 92 32 S116 22, 132 34 S160 42, 177 35 S204 46, 222 42 S244 48, 257 43"/></svg><span>1 MONTH AGO</span><span>TODAY</span></div></div>
+        <div class="today-summary"><p class="eyebrow">TODAY'S MOVEMENT <span>24H</span></p><strong id="todayMovement">$0</strong><p id="todayPercent">— vs yesterday</p><div class="summary-rule"></div><div class="summary-stats"><div><p>INVESTED</p><b id="investedValue">$0</b></div><div><p>POSITIONS</p><b id="positionCount">0</b></div></div></div>
+      </section>
+
+      <section class="grid">
+        <article class="panel allocation-panel"><div class="panel-heading"><div><p class="eyebrow">ALLOCATION</p><h2>Where your money sits</h2></div><button class="quiet-button" aria-label="More allocation options">•••</button></div><div class="allocation-content"><div class="donut" id="donut"><div><small>ALLOCATION</small><b>100%</b></div></div><div class="allocation-legend" id="allocationLegend"></div></div><p class="allocation-tip">✧ <span>A balanced base with a little room for conviction.</span></p></article>
+        <article class="panel movers-panel"><div class="panel-heading"><div><p class="eyebrow">MARKET PULSE</p><h2>The names moving today</h2></div><small id="trackedCount">0 tracked</small></div><div class="movers" id="movers"></div></article>
+      </section>
+
+      <section class="panel holdings-panel" id="holdings"><div class="holdings-heading"><div><p class="eyebrow">YOUR POSITIONS</p><h2>Holdings</h2></div><div class="holding-actions"><label><span>⌕</span><input type="search" id="searchInput" placeholder="Search holdings" /></label><button class="primary-button" id="addButton">＋&nbsp; Add holding</button></div></div><div class="holdings-table"><div class="table-head"><span>ASSET</span><span>PRICE</span><span>DAY</span><span>HOLDINGS</span><span>VALUE</span><span>RETURN</span><span></span></div><div id="holdingRows"></div></div><footer class="holdings-footer"><span>☁ &nbsp; Quotes are simulated locally</span><span id="syncedAt">Not synced</span></footer></section>
+      <footer class="site-footer"><span>Northstar is a personal view, not financial advice.</span><span>BUILT FOR THE LONG VIEW</span></footer>
+    </main>
+
+    <div class="holding-sheet" id="holdingSheet" aria-hidden="true">
+      <div class="sheet-backdrop" data-close-sheet></div>
+      <section class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <header class="sheet-header"><div><p class="eyebrow">NEW POSITION</p><h2 id="sheetTitle">Add a holding</h2><p>Set the basics once. You can refine it anytime.</p></div><button class="close-button" type="button" data-close-sheet aria-label="Close add holding">×</button></header>
+        <form id="holdingForm">
+          <div class="sheet-section"><div class="section-label"><span>01</span><div><b>What do you own?</b><small>Use the ticker that you recognise.</small></div></div><div class="form-grid identity-fields"><label>Symbol<input name="symbol" required placeholder="e.g. VTI" maxlength="10" autocomplete="off" /></label><label>Display name<input name="name" required placeholder="e.g. Vanguard Total Stock Market" autocomplete="off" /></label></div></div>
+          <div class="sheet-section"><div class="section-label"><span>02</span><div><b>What kind of asset?</b><small>This keeps your allocation clear.</small></div></div><div class="asset-types" role="radiogroup" aria-label="Asset type"><button type="button" class="asset-type selected" data-type="Stock">Stock</button><button type="button" class="asset-type" data-type="ETF">Fund / ETF</button><button type="button" class="asset-type" data-type="Crypto">Crypto</button><button type="button" class="asset-type" data-type="Metal">Metal</button><button type="button" class="asset-type" data-type="Cash">Cash</button><input type="hidden" name="type" value="Stock" /></div></div>
+          <div class="sheet-section"><div class="section-label"><span>03</span><div><b>Your position</b><small>All amounts are in USD for now.</small></div></div><div class="form-grid position-fields"><label>Units<input name="quantity" required type="number" min="0" step="any" inputmode="decimal" placeholder="0" /></label><label>Average cost <span>per unit</span><input name="costBasis" required type="number" min="0" step="any" inputmode="decimal" placeholder="0.00" /></label><label>Current price <span>per unit</span><input name="price" required type="number" min="0" step="any" inputmode="decimal" placeholder="0.00" /></label></div><div class="position-preview"><span>Position value <b id="draftValue">$0.00</b></span><span>Unrealised return <b id="draftReturn">—</b></span></div></div>
+          <footer class="sheet-footer"><button type="button" class="text-button" data-close-sheet>Cancel</button><button type="submit" class="primary-button">Save holding <span>→</span></button></footer>
+        </form>
+      </section>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
